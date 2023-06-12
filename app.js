@@ -1,11 +1,11 @@
 const cardwrapper = document.querySelector(".card-wrapper")
 
-let book = {
-    title: "Mystery",
-    author: "ned stranger",
-    pages: 445,
-    isCompleted: false,
-}
+// let book = {
+//     title: "Mystery",
+//     author: "ned stranger",
+//     pages: 445,
+//     isCompleted: false,
+// }
 
 let myLibrary = [
     {
@@ -61,7 +61,7 @@ function Book(title, author, pages, isCompleted) {
 function addBookToLibrary(title, author, pages, isCompleted) {
     // do stuff here
     const newBook = new Book(title, author, pages, isCompleted);
-    myLibrary.push(book)
+    myLibrary.push(newBook)
 }
 
 function displayBooks(library) {
@@ -92,7 +92,21 @@ document.getElementById("book-form").addEventListener("submit", function(event) 
     // Re-render the book list to include the new book
     cardwrapper.textContent = ""; // Clear existing book cards
     displayBooks(myLibrary);
+
+    // close modal after book has been added
+    document.getElementById("modal").classList.add("hidden");
 })
 
-addBookToLibrary(book);
-displayBooks(myLibrary);
+// --- Modals ---
+// handle adding a new book that brings up the form
+document.getElementById("add-book").addEventListener("click", function(event) {
+    document.getElementById("modal").classList.remove("hidden");
+})
+
+// close modal when clicking outside the form
+document.getElementById("overlay").addEventListener("click", function(event) {
+    document.getElementById("modal").classList.add("hidden");
+})
+
+// addBookToLibrary(book);
+// displayBooks(myLibrary);

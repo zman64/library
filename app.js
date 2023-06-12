@@ -1,20 +1,49 @@
-const cardwrapper = document.querySelector(".card-wrapper")
 
-// let book = {
-//     title: "Mystery",
-//     author: "ned stranger",
-//     pages: 445,
-//     isCompleted: false,
-// }
 
-let myLibrary = [
-    {
-        title: "Lord of the Rings",
-        author: "JRR Tolkien",
-        pages: 345,
-        isCompleted: true,
-    }
-];
+// document.getElementById("add-book").addEventListener("click", function() {
+//     // handle adding a book
+//     const newBook = new Book(title, author, pages, isCompleted)
+//     myLibrary.addBook(newBook);
+// })
+
+function Book(title, author, pages, isCompleted) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isCompleted = isCompleted;
+
+}
+
+Book.prototype.toggleReadStatus = function() {
+    this.isCompleted = !this.isCompleted;
+}
+
+function Library() {
+    this.books = [];
+    this.cardWrapper = document.querySelector(".card-wrapper");
+}
+
+Library.prototype.addBook = function(book) {
+    this.books.push(book);
+    this.render();
+}
+
+Library.prototype.removeBook = function(index) {
+    this.books.splice(index, 1);
+    this.render();
+};
+
+Library.prototype.render = function() {
+    this.cardWrapper.innerHTML = '';
+
+    this.books.forEach((book, index) => {
+        bookCard = createBookCard();
+        populateBookCard(bookCard, book ,index);
+        this.cardWrapper.appendChild(bookCard);
+    })
+
+    
+}
 
 function createBookCard() {
     const bookCard = document.createElement("div");
@@ -23,7 +52,6 @@ function createBookCard() {
 }
 
 function populateBookCard(bookCard, book, index) {
-
     const author = document.createElement('div');
     author.classList.add('author');
     author.textContent = book.author;
@@ -62,52 +90,8 @@ function populateBookCard(bookCard, book, index) {
     // Add event listener to the delete button
     deleteBook.addEventListener('click', function(event) {
         const bookIndex = event.target.getAttribute('data-index');
-        removeBookFromLibrary(bookIndex);
+        myLibrary.removeBook(bookIndex);
     })
-
-    
-
-
-}
-
-function removeBookFromLibrary(index) {
-    //Remove the book from the library array
-    myLibrary.splice(index, 1);
-
-    //render the book list
-    const cardWrapper = document.querySelector('.card-wrapper');
-    cardWrapper.textContent = '';
-    displayBooks(myLibrary);
-}
-
-function appendBookCardToWrapper(bookCard) {
-    cardwrapper.appendChild(bookCard);
-}
-
-function Book(title, author, pages, isCompleted) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isCompleted = isCompleted;
-
-}
-
-Book.prototype.toggleReadStatus = function() {
-    this.isCompleted = !this.isCompleted;
-}
-
-function addBookToLibrary(title, author, pages, isCompleted) {
-    // do stuff here
-    const newBook = new Book(title, author, pages, isCompleted);
-    myLibrary.push(newBook)
-}
-
-function displayBooks(library) {
-    library.forEach((book, index) => {
-        const bookCard = createBookCard();
-        populateBookCard(bookCard, book, index);
-        appendBookCardToWrapper(bookCard);
-    });
 }
 
 // Function to handle form submission
@@ -119,17 +103,14 @@ document.getElementById("book-form").addEventListener("submit", function(event) 
     const pages = document.getElementById("pages").value;
     const isCompleted = document.getElementById("isCompleted").checked;
 
-    addBookToLibrary(title, author, pages, isCompleted);
+    const newBook = new Book(title, author, pages, isCompleted);
+    myLibrary.addBook(newBook);
 
     // clear the input fields after submission
     document.getElementById("title").value = '';
     document.getElementById("author").value = '';
     document.getElementById("pages").value = '';
     document.getElementById("isCompleted").checked = false;
-
-    // Re-render the book list to include the new book
-    cardwrapper.textContent = ""; // Clear existing book cards
-    displayBooks(myLibrary);
 
     // close modal after book has been added
     document.getElementById("modal").classList.add("hidden");
@@ -146,5 +127,12 @@ document.getElementById("overlay").addEventListener("click", function(event) {
     document.getElementById("modal").classList.add("hidden");
 })
 
-// addBookToLibrary(book);
-displayBooks(myLibrary);
+let startingBook =  {
+    title: "Lord of the Rings",
+    author: "JRR Tolkien",
+    pages: 345,
+    isCompleted: true,
+};
+
+const myLibrary = new Library();
+myLibrary.addBook(startingBook);

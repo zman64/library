@@ -22,7 +22,7 @@ function createBookCard() {
     return bookCard;
 }
 
-function populateBookCard(bookCard, book) {
+function populateBookCard(bookCard, book, index) {
 
     const author = document.createElement('div');
     author.classList.add('author');
@@ -44,6 +44,40 @@ function populateBookCard(bookCard, book) {
     isCompleted.textContent = book.isCompleted ? 'Has read' : 'Not read yet';
     bookCard.appendChild(isCompleted);
 
+    // button to toggle read status
+    const toggleReadStatusButton = document.createElement('button');
+    toggleReadStatusButton.textContent = 'Toggle Read Status';
+    toggleReadStatusButton.addEventListener('click', function() {
+        book.toggleReadStatus();
+        isCompleted.textContent = book.isCompleted ? 'Has read' : 'Not read'
+    });
+    bookCard.appendChild(toggleReadStatusButton);
+
+    const deleteBook = document.createElement('button');
+    deleteBook.classList.add('delete-book');
+    deleteBook.textContent = 'Delete';
+    deleteBook.setAttribute('data-index', index)
+    bookCard.appendChild(deleteBook)
+
+    // Add event listener to the delete button
+    deleteBook.addEventListener('click', function(event) {
+        const bookIndex = event.target.getAttribute('data-index');
+        removeBookFromLibrary(bookIndex);
+    })
+
+    
+
+
+}
+
+function removeBookFromLibrary(index) {
+    //Remove the book from the library array
+    myLibrary.splice(index, 1);
+
+    //render the book list
+    const cardWrapper = document.querySelector('.card-wrapper');
+    cardWrapper.textContent = '';
+    displayBooks(myLibrary);
 }
 
 function appendBookCardToWrapper(bookCard) {
@@ -58,6 +92,10 @@ function Book(title, author, pages, isCompleted) {
 
 }
 
+Book.prototype.toggleReadStatus = function() {
+    this.isCompleted = !this.isCompleted;
+}
+
 function addBookToLibrary(title, author, pages, isCompleted) {
     // do stuff here
     const newBook = new Book(title, author, pages, isCompleted);
@@ -65,9 +103,9 @@ function addBookToLibrary(title, author, pages, isCompleted) {
 }
 
 function displayBooks(library) {
-    library.forEach(book => {
+    library.forEach((book, index) => {
         const bookCard = createBookCard();
-        populateBookCard(bookCard, book);
+        populateBookCard(bookCard, book, index);
         appendBookCardToWrapper(bookCard);
     });
 }
@@ -109,4 +147,4 @@ document.getElementById("overlay").addEventListener("click", function(event) {
 })
 
 // addBookToLibrary(book);
-// displayBooks(myLibrary);
+displayBooks(myLibrary);

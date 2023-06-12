@@ -201,6 +201,9 @@ footer {
 }
 
 @media screen and (max-width: 624px) {
+    header {
+        padding: 0.5em;
+    }
     main {
         width: 100%;
     }

@@ -1,4 +1,10 @@
 :root {
+    --primary-clr: red;
+    --secondary-clr: orange;
+    --accent-clr: blue;
+    --btn-clr: white;
+
+
 
 }
 
@@ -6,6 +12,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 body {
@@ -17,15 +29,57 @@ body {
     /* gap: 15px; */
 }
 
+/* --- Header Styles --- */
+
 header {
     background-color: #fff;
     padding: 2em;
 }
 
+h1 {
+    letter-spacing: clamp(0.06rem, 0.35vw, 1rem);
+}
+
+.header-wrapper {
+    width: 100%;
+    gap: 15px;
+}
+
+.library-icon {
+    width: 50px;
+    height: auto;
+}
+
+
+/* --- Main --- */
+
 main {
+    /* max-width: 840px; */
+    /* min-width: 650px; */
+    margin: 0 auto;
+    width: 70%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    
+    /* justify-content: center; */
     background-color: blue;
     padding: 2em;
 }
+
+.card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    background-color: orange;
+    gap: 15px;
+}
+
+.card {
+    height: 200px;
+    background-color: #fff;
+}
+
+
+/* --- Footer --- */
 
 footer {
     background-color: red;

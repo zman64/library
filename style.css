@@ -92,8 +92,7 @@ main {
     background-color: #dab956;
 }
 
-/* --- in Main book cards --- */
-
+/* #region main */
 .card-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -130,8 +129,9 @@ main {
 .not-read {
     background: rgb(195, 9, 9);
 }
+/* #endregion */
 
-/* --- Modal Styles --- */
+/* #region Modal Styles */
 .modal {
     position: fixed;
     top: 0;
@@ -153,8 +153,9 @@ main {
     background-color: rgba(0,0,0,0.5);
     z-index: 20;
 }
+/* #endregion */
 
-/* --- Form --- */
+/* #region Form */
 #add-book-form {
     /* position: fixed;
     top: 50%;
@@ -231,9 +232,9 @@ main {
 .hidden {
     display: none;
 }
+/* #endregion */
 
-/* --- Footer --- */
-
+/* #region Footer */
 footer {
     background-color: var(--primary-clr);
     color: var(--btn-clr);
@@ -249,3 +250,4 @@ footer {
         width: 100%;
     }
 }
+/* #endregion */
